@@ -1,7 +1,7 @@
 
 Table of Contents
-- [Introduction](# Introduction)
-- [Features](# Features)
+- [Introduction](#introduction)
+- [Features](#features)
 
 # Introduction
 
