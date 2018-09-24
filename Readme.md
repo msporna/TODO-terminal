@@ -1,11 +1,32 @@
-"TODO TERMINAL"
 
 Table of Contents
-TODO
+- [Introduction](#introduction)
+- [Features](#features)
+- [Media](#media)
+- [Usage](#usage)
+   * [Creating tasks](#creating-tasks)
+   * [Current tasks](#current-tasks)
+   * [Creating subtasks](#creating-subtasks)
+   * [Completing subtasks](#completing-subtasks)
+   * [Completing tasks](#completing-tasks)
+   * [Gaining XP](#gaining-xp)
+   * [Updating tasks](#updating-tasks)
+   * [Updating subtasks](#updating-subtasks)
+   * [Deleting subtasks](#deleting-subtasks)
+   * [Filter by tags](#filter-by-tags)
+   * [Move task to tomorrow](#move-task-to-tomorrow)
+   * [Move task to backlog](#move-task-to-backlog)
+   * [Sync with Google Tasks](#sync-with-google-tasks)
+      + [Scenario 1 - Task created on device, sync with Google Tasks](#scenario-1---task-created-on-device-sync-with-google-tasks)
+      + [Scenario 2 - Task completed via Google Tasks, sync with device](#scenario-2---task-completed-via-google-tasks-sync-with-device)
+      + [Scenario 3- Task compelted via device, sync with Google tasks](#scenario-3--task-compelted-via-device-sync-with-google-tasks)
+- [Login](#login)
+- [Deployment](#deployment)
+- [License](#license)
 
 # Introduction
 
-This is a web app designed for 3.5" inch screen written in Flask framework. The app was built to be deployed on Raspberry Pi and serve as task tracking device, replacing regular notebook and having to write stuff with pen. Editing tasks on paper is, let's say, not user friendly. As I'm a person who likes to write tasks down physically, I figured this project would make my life easier. <br>
+This is yet another web TODO app but designed for 3.5" inch screen and Raspberry pi. The idea is for this device to serve as task tracking device, replacing regular notebook and having to write stuff with pen. Editing tasks on paper is, let's say, not user friendly. As I'm a person who likes to write tasks down physically, I figured this project would make my life easier. <br>
 
 # Features:
 
@@ -30,8 +51,6 @@ This is a web app designed for 3.5" inch screen written in Flask framework. The 
 ![action menu](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/3.jpg)
 
 ![main menu](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/4.jpg)
-
-![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/6.jpg)
 
 ![add task screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/7.jpg)
 
@@ -99,7 +118,7 @@ To complete a task, expand the Action menu [A] and select "it's done!". Page wil
 
 XP points are given everytime a subtask or task is completed. When the bar is fully filled, level is increased and xp points go back to 0 just to be gained again to get another level. Pure fun.
 
-![xp](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/xp.PNG
+![xp](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/xp.PNG)
 
 ## Updating Tasks
 
@@ -213,7 +232,7 @@ Login screen is the first screen that user sees. Login is required to view main 
 
 Default combination is this:
 
-~screenshot~
+![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/6.jpg)
 
 It can be modified in views.py file, line 245:<br/>
 `if login_set[0] == '6' and login_set[1] == '7' and login_set[2] == '1' and login_set[3] == '1': valid = True`
