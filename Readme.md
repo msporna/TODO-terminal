@@ -1,6 +1,7 @@
 
 Table of Contents
 - [Introduction](#Introduction)
+- [Features](#Features)
 
 # Introduction
 
