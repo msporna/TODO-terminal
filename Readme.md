@@ -17,7 +17,7 @@ Table of Contents
    * [Move task to tomorrow](#move-task-to-tomorrow)
    * [Move task to backlog](#move-task-to-backlog)
    * [Sync with Google Tasks](#sync-with-google-tasks)
-      +[Scenario 1 - Task created on device, sync with Google Tasks](#scenario-1---task-created-on-device-sync-with-google-tasks)
+      + [Scenario 1 - Task created on device, sync with Google Tasks](#scenario-1---task-created-on-device-sync-with-google-tasks)
 - [Login](#login)
 - [Deployment](#deployment)
 - [License](#license)
