@@ -4,7 +4,7 @@ Table of Contents
 - [Features](#features)
 - [Media](#media)
 - [Usage](#usage)
-* [Creating Tasks](#creating-tasks)
+   * [Creating Tasks](#creating-tasks)
 - [Login](#login)
 - [Deployment](#deployment)
 - [License](#license)
