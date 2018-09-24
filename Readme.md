@@ -232,7 +232,7 @@ Login screen is the first screen that user sees. Login is required to view main 
 
 Default combination is this:
 
-![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/6.jpg)
+![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/guide/login.png)
 
 It can be modified in views.py file, line 245:<br/>
 `if login_set[0] == '6' and login_set[1] == '7' and login_set[2] == '1' and login_set[3] == '1': valid = True`
