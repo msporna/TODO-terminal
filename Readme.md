@@ -120,7 +120,7 @@ To complete a task, expand the Action menu [A] and select "it's done!". Page wil
 
 XP points are given everytime a subtask or task is completed. When the bar is fully filled, level is increased and xp points go back to 0 just to be gained again to get another level. Pure fun.
 
-![xp](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/xp.PNG
+![xp](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/xp.PNG)
 
 ## Updating Tasks
 
