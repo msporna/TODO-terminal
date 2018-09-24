@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+ {% for item in todo_items %}
+<div class="task-item-class">
+    <div id="task_{{item.id}}_history" class="task-title-item-class">
+        <button class="task-title-text-class" data-toggle="collapse" data-target="#task_{{item.id}}_history_content">{{ item.title }}</button>
+        <p class="task-subtitle-text-class">{{ item.due_date }}</p>
+        <div class="task-settings-class"> <button class="btn btn-default dropdown-toggle action-dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> [A] <span class="caret"></span> </button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> <li><a href="javascript:deleteTask({{item.id}})">Delete</a></li></ul> </div>
+    </div>
+
+
+    <div id="task_{{item.id}}_history_content" class="collapse">
+        <p class="task-description-item-class">
+            {{item.description}}
+        </p>
+        <p class="task-item-tags-class">
+            {{item.tags}}
+        </p>
+        <div class="task-item-subtasks-class" id="task_{{item.id}}_subtasksTree">
+            <ul>
+                {% for subtask in item.subtasks %}
+                <li id="{{subtask.id}}" parent="{{item.id}}">{{subtask.title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+
+</div>
+
+ {% endfor %}
+<script>
+
+    onTabSwitched(2);
+    //hide xp bar
+    $("#xp-bar").attr('class', 'hidden');
+    $("#account-bar-next-level").attr('class', 'hidden');
+</script>
+
+{% endblock %}

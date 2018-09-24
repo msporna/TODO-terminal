@@ -1,0 +1,25 @@
+{% extends "layout.html" %} {% block content %}
+
+<p class="add-new-top-bar-class">
+<button class="add-new-save-button" onclick="saveSUBTASK()">Save</button>
+<button class="add-new-cancel-button" onclick="cancelSUBTASK()">Cancel</button>
+</p>
+<p class="add-new-title-element-label-class">title:</p>
+<input type="text" class="add-new-title-element-class" id="subtaskTitleTextBox" onfocus="onSubtaskKeyboard1FocusReceived()" />
+
+
+
+
+<script>
+    $(document).ready(function () {
+        if ((window.location.href.indexOf('add_subtask') !== -1)) {
+            init_subtask_page({{parent_id}});
+           
+        }
+    });
+
+   
+</script>
+
+
+{% endblock %}

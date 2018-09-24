@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+ {% for item in todo_items %}
+<div class="task-item-class">
+    <div id="task_{{item.id}}" class="task-title-item-class">
+        <button class="task-title-text-class" data-toggle="collapse" data-target="#task_{{item.id}}_content" >{{ item.title }}</button>
+        <p class="task-subtitle-text-class">{{ item.due_date }}</p>
+        <div class="task-settings-class"> <button class="btn btn-default dropdown-toggle action-dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> [A] <span class="caret"></span> </button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> <li><a href="javascript:completeTask({{item.id}})">It's done!</a></li> <li><a href="javascript:moveToBacklog({{item.id}},1)">Todo tomorrow</a></li> <li><a href="javascript:moveToBacklog({{item.id}},2)">->backlog</a></li><li><a href="{{url_for('add_subtask',parent_id=item.id)}}">Add subtask</a></li><li><a href="{{ url_for('edit_todo',task_id=item.id) }}">Edit</a></li><li><a href="javascript:deleteTask({{item.id}})">Delete</a></li></ul> </div>
+    </div>
+    <div id="task_{{item.id}}_content" class="collapse">
+        <p class="task-description-item-class">
+            {{item.description}}
+        </p>
+        <p class="task-item-tags-class">
+            {{item.tags}}
+        </p>
+        <div class="task-item-subtasks-class" id="task_{{item.id}}_subtasksTree">
+            <ul>
+                {% for subtask in item.subtasks %}
+                <li id="{{subtask.id}}" parent="{{item.id}}">{{subtask.title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+
+
+</div>
+
+<script>
+    $('#task_{{item.id}}_subtasksTree').jstree({
+        "plugins": [
+        "checkbox"],
+        "checkbox": {
+            "three_state": false,
+            "whole_node": false,
+            "tie_selection": false
+        },
+        "core": {
+            "themes": {
+                "icons": false
+            }
+
+        }
+    }).on("check_node.jstree", function (e, data) {
+        console.log("checked subtask: " + data.node.id, "/parent task:" + data.node.li_attr.parent);
+        completeSubtask(data.node.id, data.node.li_attr.parent);
+
+    });</script>
+ {% endfor %}
+
+<script>
+    
+    onTabSwitched(0);
+    awardXP({{XP}},{{pending_xp}},{{level}});
+
+    
+</script>
+
+{% endblock %}

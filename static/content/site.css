@@ -1,0 +1,388 @@
+body
+{
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+
+}
+
+
+
+.body-content
+{
+    position:absolute;
+    top: 50px;
+    bottom:0;
+}
+
+.current-button-class
+{
+    position:absolute;
+    left:0;
+    top:0;
+    height:50px;
+    width:100px;
+    background-color:#27AE60;
+    border-style:none;
+
+}
+
+.current-button-active-class
+{
+    background-color:#1ABC9C;
+}
+
+.backlog-button-class
+{
+    position:absolute;
+    left:105px;
+    top:0;
+    height:50px;
+    width:100px;
+    background-color:#8E44AD;
+    border-style:none;
+}
+
+.backlog-button-active-class
+{
+    background-color:#9B59B6;
+}
+
+.task-item-class
+{
+    position:relative;
+    margin-top:10vh;
+    left:2vw;
+    right:0;
+    border-style:solid;
+    border-width:0.1px;
+    border-color:#8eff7f;
+}
+
+.task-title-item-class
+{
+    top:0px;
+    background-color:#8eff7f;
+    color:black;
+    height:15vh;
+    width:95vw;
+}
+
+.task-item-subtasks-class
+{
+
+  
+    margin-left:-6vw;
+}
+
+.task-description-item-class
+{
+    border-style:dotted;
+    border-width:1px;
+    width:95vw;
+}
+
+.task-item-tags-class
+{
+    color:black;
+    background-color:aliceblue;
+}
+
+.task-title-text-class
+{
+    font-size:14px;
+    top:2px;
+    left:5px;
+    color:#0f0;
+    background-color:black;
+    border-style:none;
+    position:absolute;
+
+
+}
+
+.task-settings-class
+{
+    position:absolute;
+    top:2vh;
+    right:20vw;
+    width:18px;
+    
+}
+
+.task-subtitle-text-class
+{
+    font-size:12px;
+    top:10vh;
+    position:absolute;
+}
+
+.add-new-top-bar-class
+{
+    position:absolute;
+    top:0vh;
+    left:0vh;
+    width:100vw;
+    height:10vh;
+    background-color:#27304a;
+}
+
+.add-new-top-title-class
+{
+    color:black;
+
+}
+
+.add-new-title-element-label-class
+{
+    position:absolute;
+    top:10vh;
+}
+
+
+.add-new-title-element-class
+{
+    position:absolute;
+    top:15vh;
+    width:90vw;
+}
+
+.add-new-title-element-class-focused
+{
+     position:absolute;
+     top:1vh;
+     width:100vw;
+     height:35vh;
+     z-index:100;
+}
+
+
+.add-new-description-label-class
+{
+    position:absolute;
+    top:30vh;
+    width:90vw;
+}
+
+.add-new-description-area-class
+{
+    position:absolute;
+    top:35vh;
+    width:90vw;
+    height: 20vh;
+}
+
+.add-new-description-area-class-focused
+{
+    position:absolute;
+    top:1vh;
+    width:100vw;
+    height: 35vh;
+}
+
+.add-new-defined-progress-class
+{
+    position:absolute;
+    top:35vh;
+    width:90vw;
+}
+
+.add-new-defined-progress-class-focused
+{
+    position:absolute;
+    top:1vh;
+      width:100vw;
+     height:35vh;
+}
+
+.add-new-save-button
+{
+    position:absolute;
+    top:1vh;
+    left: 73vw;
+}
+.add-new-cancel-button
+{
+    position:absolute;
+    top:1vh;
+    left:85vw;
+}
+
+.add-new-datepicker-class
+{
+    position:absolute;
+    top:1vh;
+    left:0;
+    width:20vw;
+}
+
+.add-new-tags-label-class
+{
+    position:absolute;
+    top:55vh;
+    width:90vw;
+    height: 20vh;
+}
+
+.add-new-tags-class
+{
+    position:absolute;
+    top:60vh;
+    width:90vw;
+    height: 20vh;
+}
+
+.add-new-tags-keyboard-class
+{
+     position:absolute;
+    top:65vh;
+    left: 95vw;
+}
+
+.add-new-tags-hidden-class
+{
+ visibility: hidden;
+}
+
+.add-new-tags-keyboard-visible-class-focused
+{
+    position:absolute;
+     top:1vh;
+     width:100vw;
+     height:35vh;
+}
+
+.add-new-enable-notifications-checkbox-class
+{
+     position:absolute;
+    top:1vh;
+    left:25vw;
+    width:20vw;
+}
+
+.add-new-allow-tasks-checkbox-class
+{
+  position:absolute;
+    top:1vh;
+    left:40vw;
+    width:40vw;
+}
+
+.dropdown-menu
+{
+    left:-4vw;
+    min-width:120px;
+}
+
+.hidden{
+  display:none;  
+}
+
+.disabled {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
+}
+
+.completed
+{
+     text-decoration: line-through;
+     list-style: none;
+}
+
+.jstree-default .jstree-clicked{
+    background:#1eff000d;
+}
+
+.jstree-default .jstree-hovered{
+    background:#1eff000d;
+}
+
+.login-button 
+{
+    position:absolute;
+    top: 5vh;
+    right:10vw;
+    width:100px;
+    height:50px;
+}
+
+.login-challenge-b1
+{
+    position:absolute;
+    top: 10vh;
+    left:5vw;
+    width:100px;
+    height:60px;
+}
+
+.login-challenge-b2
+{
+    position:absolute;
+    top: 30vh;
+    left:5vw;
+   width:100px;
+    height:60px;
+}
+
+.login-challenge-b3
+{
+    position:absolute;
+    top: 50vh;
+    left:5vw;
+     width:100px;
+    height:60px;
+}
+
+.login-challenge-b4
+{
+    position:absolute;
+    top: 70vh;
+    left:5vw;
+    width:100px;
+    height:60px;
+}
+
+.login-challenge-b5
+{
+    position:absolute;
+    top: 10vh;
+    left:40vw;
+   width:100px;
+    height:60px;
+}
+
+.login-challenge-b6
+{
+    position:absolute;
+    top: 30vh;
+    left:40vw;
+   width:100px;
+    height:60px;
+}
+
+.login-challenge-b7
+{
+    position:absolute;
+    top: 50vh;
+    left:40vw;
+     width:100px;
+    height:60px;
+}
+
+.login-challenge-b8
+{
+    position:absolute;
+    top: 70vh;
+    left:40vw;
+   width:100px;
+    height:60px;
+}
+
+.action-dropdown
+{
+    position:absolute;
+    left:12vw;
+    top:3vh;
+}

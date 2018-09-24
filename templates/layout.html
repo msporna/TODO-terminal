@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="/static/content/keyboard-dark.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/hacker.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap-tagsinput.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap-datepicker3.standalone.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap-dialog.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/selectize.default.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/tree-style.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/xp-bar-styles.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+
+    <script src="/static/scripts/modernizr-2.6.2.js"></script>
+    <script src="/static/scripts/moment.min.js"></script>
+    <script src="/static/scripts/jquery-1.10.2.js"></script>
+    <script src="/static/scripts/jstree.min.js"></script>
+    <script src="/static/scripts/bootstrap-datepicker.min.js"></script>
+     <script src="/static/scripts/jquery.keyboard.min.js"></script>
+     <script src="/static/scripts/jquery.keyboard.extension-all.min.js"></script>
+    <script src="/static/scripts/bootstrap.js"></script>
+    <script src="/static/scripts/respond.js"></script>
+    <script src="/static/scripts/bootstrap-tagsinput.js"></script>
+    <script src="/static/scripts/selectize.min.js"></script>
+    <script src="/static/scripts/bootstrap-dialog.min.js"></script>
+    <script src="/static/scripts/js.cookie.js"></script>
+    <script src="/static/scripts/xpBarController.js"></script>
+    <script src="/static/scripts/main.js"></script>
+    <script src="/static/scripts/addNewController.js"></script>
+    <script src="/static/scripts/addNewSubtaskController.js"></script>
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav nav-tabs">
+                    {% if filterApplied==1 %}
+                    <li id="tab1" role="presentation"><a if="tab1_text" href="{{ url_for('home') }}">Current*</a></li>
+                    {% else %}
+                    <li id="tab1" role="presentation"><a href="{{ url_for('home') }}">Current</a></li>
+                    {% endif %}
+                    <li id="tab2" role="presentation"><a href="{{ url_for('backlog') }}">Backlog</a></li>
+                    <li id="tab3" role="presentation" ><a href="{{ url_for('history') }}">History</a></li>
+
+                </ul>
+                <div id='xp-bar'>
+                    <div id='xp-bar-fill'>
+                        <div id='xp-increase-fx'><div id='xp-increase-fx-flicker'><div class='xp-increase-glow1'></div><div class='xp-increase-glow2'></div><div class='xp-increase-glow3'></div></div><div class='xp-increase-glow2'></div></div>
+                    </div>
+                </div>
+                <div id='account-bar-next-level'>{{level}}</div>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('add_todo') }}">New</a></li>
+                    <li><a href="{{ url_for('filter_tag') }}">Filter Tags</a></li>
+                    <li><a href="javascript:doSync()">Sync</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-content">
+        {% block content %}{% endblock %}
+      
+       
+    </div>
+
+  
+
+</body>
+</html>

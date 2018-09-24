@@ -1,0 +1,59 @@
+{% extends "layout.html" %} {% block content %}
+
+<br />
+<p>Check the tags and you will see only related tasks in the current tab.To remove filter,uncheck all and apply.</p>
+<button onclick="applyFilter()">apply</button>
+<br />
+<div class="task-item-subtasks-class" id="filterTagTree">
+    <ul>
+        {% for tag in tags %}
+        <li id="{{tag.id}}">{{tag.name}}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#filterTagTree').jstree({
+            "plugins": [
+            "checkbox"],
+            "checkbox": {
+                "three_state": false,
+                "whole_node": false,
+                "tie_selection": false
+            },
+            "core": {
+                "themes": {
+                    "icons": false
+                }
+
+            }
+        }).on("check_node.jstree", function (e, data) {
+            console.log("checked tag: " + data.node.text);
+            onFilterTagSelected(data.node.text);
+
+
+
+        })
+        .on("uncheck_node.jstree", function (e, data) {
+            console.log("unchecked tag: " + data.node.text);
+            onFilterTagUnSelected(data.node.text);
+
+
+
+        });
+
+    });
+
+    //hide xp bar
+    $("#xp-bar").attr('class', 'hidden');
+    $("#account-bar-next-level").attr('class', 'hidden');
+
+    
+
+
+</script>
+
+
+{% endblock %}

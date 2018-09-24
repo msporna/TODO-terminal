@@ -1,0 +1,37 @@
+{% extends "layout.html" %} {% block content %}
+
+<p class="add-new-top-bar-class">
+    <input id="addNewDatePicker1" type="text" class="add-new-datepicker-class">
+    <p class="add-new-allow-tasks-checkbox-class">
+        <input id="allowGoogleSyncCheckbox" type="checkbox">Google Tasks Sync</p>
+    <button class="add-new-save-button" onclick="saveTODO()">save</button>
+    <button class="add-new-cancel-button" onclick="cancelTODO()">Cancel</button>
+</p>
+<p class="add-new-title-element-label-class">title:</p>
+<input type="text" class="add-new-title-element-class" id="todoTitleTextBox" onfocus="onKeyboard1FocusReceived()" />
+<p class="add-new-description-label-class">description:</p>
+<textarea class="add-new-description-area-class" id="todoDescriptionTextArea" placeholder="Enter Description..." onfocus="onKeyboard2FocusReceived()"></textarea>
+<p class="add-new-tags-label-class">tags:</p>
+<input id="addNewTagsInput1" class="add-new-tags-class" />
+<input id="addNewTagsInputHidden1" class="add-new-tags-hidden-class" />
+<img id="icon" onclick="onTagsIconClicked()" class="add-new-tags-keyboard-class" src="https://mottie.github.io/Keyboard/docs/css/images/keyboard.png"
+/>
+
+
+
+<script>
+    $(document).ready(function () {
+        if ((window.location.href.indexOf('add_todo') !== -1) || (window.location.href.indexOf('edit_todo') !== -1)) {
+            init();
+            {% if mode=="Edit" %}
+            setValuesToEdit("{{todo_item.due_date}}", "{{todo_item.title}}","{{todo_item.description}}","{{todo_item.tags}}",{{todo_item.id}},{{todo_item.has_google_sync}},{{todo_item.has_notifications}})
+            {% endif %}
+        }
+
+    });
+
+   
+</script>
+
+
+{% endblock %}
