@@ -18,6 +18,8 @@ Table of Contents
    * [Move task to backlog](#move-task-to-backlog)
    * [Sync with Google Tasks](#sync-with-google-tasks)
       + [Scenario 1 - Task created on device, sync with Google Tasks](#scenario-1---task-created-on-device-sync-with-google-tasks)
+      + [Scenario 2 - Task completed via Google Tasks, sync with device](#scenario-2---task-completed-via-google-tasks-sync-with-device)
+      + [Scenario 3- Task compelted via device, sync with Google tasks](#scenario-3--task-compelted-via-device-sync-with-google-tasks)
 - [Login](#login)
 - [Deployment](#deployment)
 - [License](#license)
