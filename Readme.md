@@ -2,6 +2,11 @@
 Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
+- [Media](#media)
+- [Usage](#usage)
+- [Login](#login)
+- [Deployment](#deployment)
+- [License](#license)
 
 # Introduction
 
