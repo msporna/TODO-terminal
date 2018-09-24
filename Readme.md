@@ -26,7 +26,7 @@ Table of Contents
 
 # Introduction
 
-This is yet another web TODO app designed for 3.5" inch screen written in Flask framework. The app was built to be deployed on Raspberry Pi and serve as task tracking device, replacing regular notebook and having to write stuff with pen. Editing tasks on paper is, let's say, not user friendly. As I'm a person who likes to write tasks down physically, I figured this project would make my life easier. <br>
+This is yet another web TODO app but designed for 3.5" inch screen and Raspberry pi. The idea is for this device to serve as task tracking device, replacing regular notebook and having to write stuff with pen. Editing tasks on paper is, let's say, not user friendly. As I'm a person who likes to write tasks down physically, I figured this project would make my life easier. <br>
 
 # Features:
 
