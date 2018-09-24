@@ -52,8 +52,6 @@ This is yet another web TODO app but designed for 3.5" inch screen and Raspberry
 
 ![main menu](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/4.jpg)
 
-![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/6.jpg)
-
 ![add task screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/7.jpg)
 
 ![sync with Google Tasks](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/IMG_0087.JPG)
@@ -234,7 +232,7 @@ Login screen is the first screen that user sees. Login is required to view main 
 
 Default combination is this:
 
-~screenshot~
+![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/6.jpg)
 
 It can be modified in views.py file, line 245:<br/>
 `if login_set[0] == '6' and login_set[1] == '7' and login_set[2] == '1' and login_set[3] == '1': valid = True`
