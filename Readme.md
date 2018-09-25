@@ -41,6 +41,7 @@ This is yet another web TODO app but designed for 3.5" inch screen and Raspberry
 - History tab for historical data
 - Filter active tasks by tag
 - Login screen
+- xp for completed tasks and subtasks + gaining levels! 
 
 # Media
 
@@ -252,7 +253,22 @@ So after you decide which 4 buttons and in which order are required for login, j
 
 # Deployment
 
-todo
+To build a todo device, running this todo-terminal software you'll need:
+1. Raspberry Pi (I used model 3)
+2. 3.5" touch screen for Raspberry Pi (I used one from Waveshare)
+
+The use case is this:
+- the TODO TERMINAL flask app is started on raspberry pi boot
+- Chromium browser starts on raspberry pi boot in kiosk mode and in fullscreen
+- Chromium's start page is set to localhost:8787 which is the app's default address
+- TODO TERMINAL is ready to be used
+
+
+For detailed instructions how to build such device go to Hackster.io write up:
+<a href="https://www.hackster.io/msporna/interactive-todo-list-that-syncs-with-google-tasks-53f5c2">Interactive todo list that syncs with Google Tasks</a>
+
+
+
 
 # License
 
