@@ -11,7 +11,7 @@ $(document).ready(function () {
         window.location.href = "http://localhost:8787";
     }
 
-    console.log("VERSION 0.1");
+    console.log("VERSION 2");
 
 
 });
@@ -249,4 +249,17 @@ function applyFilter() {
         }
 
 
+}
+
+function openActionMenu(related_task_id)
+{
+    window.location.href="http://localhost:8787/show_action_menu?task_id="+related_task_id
+}
+
+function openBacklogActionMenu(related_task_id) {
+    window.location.href = "http://localhost:8787/show_backlog_action_menu?task_id=" + related_task_id
+}
+
+function openHistoryActionMenu(related_task_id) {
+    window.location.href = "http://localhost:8787/show_history_action_menu?task_id=" + related_task_id
 }

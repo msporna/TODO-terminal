@@ -111,7 +111,7 @@ To complete subtask, simply check the corresponding checkbox. The subtask will d
 
 ## Completing tasks
 
-To complete a task, expand the Action menu [A] and select "it's done!". Page will be reloaded.
+To complete a task, expand the Action menu [A] and select "Complete". Page will be reloaded.
 
 ![step1](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/completeTask/completeTask1.PNG)
 
@@ -220,7 +220,14 @@ Response will contain both access_token and refresh_token. Refresh token is what
 
 6. Task on device will be marked as completed after the sync is done correctly & moved to history tab
 
-### Scenario 3- Task compelted via device, sync with Google tasks
+### Scenario 3- Task created via Google Tasks, import to device
+
+1. create task in Google Tasks app
+2. create subtasks if you need to
+3. back to device, expand menu and select Sync option
+4. Google Task tasks (and subtasks) will be imported -  those will have tag: gtask_import
+
+### Scenario 4- Task compelted via device, sync with Google tasks
 
 1. create task on device with Google Task sync enabled
 2. make sure the task shows up in Google Tasks app on your device or web
@@ -235,8 +242,17 @@ Default combination is this:
 
 ![login screen](https://github.com/msporna/TODO-terminal/blob/master/docs/screenshots/guide/login.png)
 
-It can be modified in views.py file, line 245:<br/>
-`if login_set[0] == '6' and login_set[1] == '7' and login_set[2] == '1' and login_set[3] == '1': valid = True`
+It can be modified in views.py file, line 44:<br/>
+find string: L O G I N   S E T
+
+set values for: 
+expected_number_0
+expected_number_1
+expected_number_2
+expected_number_3
+
+*NOTE: a number is required but in a form of string. Default:
+'6','7','1','1'
 
 The values: 6,7,1,1 are passed from login.js script and those are defined in login.html template:<br>
 

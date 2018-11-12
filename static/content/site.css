@@ -107,7 +107,7 @@ body
 {
     position:absolute;
     top:2vh;
-    right:20vw;
+    right:5vw;
     width:18px;
     
 }
@@ -385,4 +385,67 @@ body
     position:absolute;
     left:12vw;
     top:3vh;
+}
+
+.action-menu-b1
+{
+    position:absolute;
+    top: 10vh;
+    left:5vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
+}
+
+.action-menu-b2
+{
+    position:absolute;
+    top: 30vh;
+    left:5vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
+}
+
+.action-menu-b3
+{
+    position:absolute;
+    top: 50vh;
+    left:5vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
+}
+
+
+.action-menu-b4
+{
+    position:absolute;
+    top: 10vh;
+    left:35vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
+}
+
+
+.action-menu-b5
+{
+    position:absolute;
+    top: 30vh;
+    left:35vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
+}
+
+
+.action-menu-b6
+{
+    position:absolute;
+    top: 50vh;
+    left:35vw;
+    width:100px;
+    height:25px;
+    font-size:12px;
 }

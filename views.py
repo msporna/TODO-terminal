@@ -21,16 +21,32 @@ app = Flask(__name__)
 CORS(app)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
+###############################################
+# G O O G L E    T A S K S     D E T A I L S 
+# (required for google tasks integration)
+###############################################
 
 GOOGLE_SECRET = ''
 GOOGLE_CLIENT_ID = ''
 GOOGLE_REFRESH_TOKEN = ''
 GOOGLE_TASK_LIST_ID = ''
 
+###############################################
+# /GOOGLE TASK DETAILS
+###############################################
+
 
 XP_REWARD_FOR_SUBTASK = 5
 XP_REWARD_FOR_TASK = 10
 XP_MAX = 100  # after reaching 100xp, levelup
+
+###############################################
+# L O G I N   S E T
+###############################################
+expected_number_0='6'
+expected_number_1='7'
+expected_number_2='1'
+expected_number_3='1'
 
 # region routes
 
@@ -83,6 +99,7 @@ def home():
     set_setting("tagFilterList", filter_tag_list_param)
 
     # get today's date
+
     current_date = datetime.now().strftime('%Y-%m-%d')
     previous_date = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     results = get_all_tasks()
@@ -93,8 +110,12 @@ def home():
             # update date to today
             update_task(r["id"], r["title"], r["description"], current_date)
             if r["g_tasks_enabled"]:
-                g_task_id = update_google_task(
-                    r["title"], r["description"], current_date, r["g_task_id"])
+                try:
+                    g_task_id = update_google_task(
+                        r["title"], r["description"], current_date, r["g_task_id"])
+                except:
+                    print("something went wrong when updating google task. Skipping. No internet?")
+                    continue
                 # am not updating subtasks on purpose, to see that the task is
                 # overdue
             r["due_date"] = current_date
@@ -159,6 +180,35 @@ def add_subtask():
         parent_id=parent_id
     )
 
+@app.route('/show_action_menu')
+def show_action_menu():
+    """Renders the action menu page"""
+    task_id= request.args.get('task_id', default='', type=str)
+    return render_template(
+        'action_menu.html',
+        title='Action Menu',
+        task_id=task_id
+    )
+
+@app.route('/show_backlog_action_menu')
+def show_backlog_action_menu():
+    """Renders the backlog action menu page"""
+    task_id= request.args.get('task_id', default='', type=str)
+    return render_template(
+        'backlog_action_menu.html',
+        title='Action Menu',
+        task_id=task_id
+    )
+
+@app.route('/show_history_action_menu')
+def show_history_action_menu():
+    """Renders the history action menu page"""
+    task_id= request.args.get('task_id', default='', type=str)
+    return render_template(
+        'history_action_menu.html',
+        title='Action Menu',
+        task_id=task_id
+    )
 
 @app.route('/edit_todo')
 def edit_todo():
@@ -242,7 +292,7 @@ def do_login():
 
     valid = False
     if len(login_set) == 4:
-        if login_set[0] == '6' and login_set[1] == '7' and login_set[2] == '1' and login_set[3] == '1':
+        if login_set[0] == expected_number_0 and login_set[1] == expected_number_1 and login_set[2] == expected_number_2 and login_set[3] == expected_number_3:
             valid = True
 
     if valid:
@@ -307,47 +357,16 @@ def save_todo():
     # is_notification_enabled=bool(data["allowNotificationsCheckbox"])
     is_notification_enabled = False
     mode = data["mode"]  # add or edit
+
     task_id = None
-    g_task_id = None
-    google_sync_status = 0
-    ifft_status = 0
+   
 
     try:
         task_id = data["task_id"]
     except:
         task_id = None
 
-    if task_id == None:
-        if is_google_sync_enabled:
-            google_sync_status = 1
-            g_task_id = createupdate_google_task(
-                task_title, task_description, task_dueDate)
-        if is_notification_enabled:
-            ifft_status = 1
-            # todo : start ifft timer
-            pass
-
-        sql = "INSERT INTO TODO(title,description,is_current,is_history,due_date,has_google_sync,has_notifications,g_task_id) VALUES(?,?,?,?,?,?,?,?)"
-        task_id = execute_non_query(sql, (task_title, task_description,
-                                          1, 0, task_dueDate, google_sync_status, ifft_status, g_task_id))
-    else:
-        # update
-        g_task_id = None
-        if is_google_sync_enabled:
-            google_sync_status = 1
-            g_task_id = update_google_task(
-                task_title, task_description, task_dueDate, get_g_task_id(task_id))
-        if is_notification_enabled:
-            ifft_status = 1
-            # todo : start ifft timer
-            pass
-
-        sql = "UPDATE TODO SET title=:title,description=:d,due_date=:dd,has_google_sync=:hgs,has_notifications=:hn,g_task_id=:gtid WHERE id=:id"
-        params = {"id": task_id, "title": task_title, "d": task_description,
-                  "dd": task_dueDate, "hgs": google_sync_status, "hn": ifft_status, "gtid": g_task_id}
-        execute_non_query(sql, params)
-
-    update_tags(task_id, tags)
+    create_or_update_task(task_title,task_description,task_dueDate,tags,is_google_sync_enabled,is_notification_enabled,task_id)
     return '200'
 
 
@@ -362,23 +381,14 @@ def create_subtask():
     subtask_title = data["title"]
     subtask_progress = data["progress"]
     parent_task_id = int(data["parent"])
-    g_task_id = None
+    
 
     parent_task_data = get_task(parent_task_id)
     # find out if parent has g sync enabled to know if subtask needs to be
     # attached to some gtask
     g_sync_enabled = bool(parent_task_data[0][6])
 
-    if g_sync_enabled:
-        # create gtask of this subtask
-        g_task_id = createupdate_google_task(
-            subtask_title, "", parent_task_data[0][5])
-        move_google_task(parent_task_data[0][8], g_task_id)
-
-    # insert subtask to db
-    sql = "INSERT INTO TODO_CHILD(title,is_history,g_task_id,defined_progress,parent) VALUES(?,?,?,?,?)"
-    subtask_id = execute_non_query(
-        sql, (subtask_title, 0, g_task_id, subtask_progress, parent_task_id))
+    create_subtask(subtask_title,subtask_progress,parent_task_id,g_sync_enabled,None,parent_task_data[0][5],parent_task_data[0][8])
     return '200'
 
 
@@ -540,7 +550,11 @@ def execute_select(sql, params, fetchall):
 
 
 def update_tags(task_id, tags_string):
-    tags_collection = tags_string.split(';')
+    tags_collection=""
+    if ";" in tags_string:
+        tags_collection = tags_string.split(';')
+    else:
+        tags_collection=tags_string
     if len(tags_collection) > 0:
         unassign_all_tags(task_id)
         for tag in tags_collection:
@@ -610,7 +624,7 @@ def mark_task_as_completed(task_id):
     sql = "UPDATE TODO SET is_history=1 WHERE ID=:tid"
     param = {"tid": task_id}
     execute_non_query(sql, param)
-
+    
     award_xp(XP_REWARD_FOR_TASK)
 
 
@@ -632,6 +646,83 @@ def delete_subtask_from_db(subtask_id):
     sql = "DELETE FROM TODO_CHILD WHERE ID=:tid"
     param = {"tid": subtask_id}
     execute_non_query(sql, param)
+
+
+def create_subtask(subtask_title,subtask_progress,parent_task_id,g_sync_enabled=False,g_task_id=None,parent_due_date=None,parent_g_task_id=None):
+    if g_sync_enabled and g_task_id==None:
+        # create gtask of this subtask
+        if parent_due_date==None:
+            parent_due_date=datetime.now().strftime('%Y-%m-%d')
+        else:
+            #make sure that date is in the right format
+            try:
+                # sometimes date of the task is 2018-09-22 00:00:00 
+                # that 00:00:00 need to be removed,so change date to string and then to date without time
+                # this is valid only for tasks improted from gtasks via sync
+                parent_due_date=datetime.strptime(parent_due_date,'%Y-%m-%d %H:%M:%S')
+                parent_due_date=datetime.now().strftime('%Y-%m-%d')
+            except:
+                # just use parent due date, no converting needed
+                print("Using parent due date without any change.")
+        g_task_id = createupdate_google_task(
+            subtask_title, "", parent_due_date)
+        move_google_task(parent_g_task_id, g_task_id)
+
+    # insert subtask to db
+    subtask_id=None
+    if g_task_id !=None:
+        sql = "INSERT INTO TODO_CHILD(title,is_history,g_task_id,defined_progress,parent) VALUES(?,?,?,?,?)"
+        subtask_id = execute_non_query(
+            sql, (subtask_title, 0, g_task_id, subtask_progress, parent_task_id))
+    return subtask_id
+
+
+def create_or_update_task(task_title,task_description,task_dueDate,tags,is_google_sync_enabled=False,is_notification_enabled=False,task_id=None,g_task_id=None):
+    if task_id == None:
+        if g_task_id ==None:
+            if is_google_sync_enabled:
+                google_sync_status = 1
+                g_task_id = createupdate_google_task(
+                    task_title, task_description, task_dueDate)
+            if is_notification_enabled:
+                ifft_status = 1
+                # todo : start ifft timer
+                pass
+
+        sql = "INSERT INTO TODO(title,description,is_current,is_history,due_date,has_google_sync,has_notifications,g_task_id) VALUES(?,?,?,?,?,?,?,?)"
+        task_id = execute_non_query(sql, (task_title, task_description,
+                                          1, 0, task_dueDate, is_google_sync_enabled, is_notification_enabled, g_task_id))
+    else:
+        # update
+        if g_task_id ==None:
+            if is_google_sync_enabled:
+                google_sync_status = 1
+                g_task_id = update_google_task(
+                    task_title, task_description, task_dueDate, get_g_task_id(task_id))
+            if is_notification_enabled:
+                ifft_status = 1
+                # todo : start ifft timer
+                pass
+
+        sql = "UPDATE TODO SET title=:title,description=:d,due_date=:dd,has_google_sync=:hgs,has_notifications=:hn,g_task_id=:gtid WHERE id=:id"
+        params = {"id": task_id, "title": task_title, "d": task_description,
+                  "dd": task_dueDate, "hgs": is_google_sync_enabled, "hn": is_notification_enabled, "gtid": g_task_id}
+        execute_non_query(sql, params)
+
+    update_tags(task_id, tags)
+    return task_id
+
+
+def get_task_by_g_id(g_task_id):
+    '''
+    get task instance by google task id
+    '''
+    sql = "SELECT * FROM TODO WHERE g_task_id=:gid"
+    params = {"gid": g_task_id}
+    results = execute_select(sql, params, fetchall=True)
+    if len(results)==0:
+        return None
+    return results
 
 
 def get_task(task_id=None, active_only=True):
@@ -839,14 +930,11 @@ def sync_with_google_tasks():
     '''
     # first clear completed tasks from the task list
     clear_completed_google_tasks()
+    add_non_existing_google_tasks()
     # now get all the tasks and update status of their instance in todo.db
-    access_token = get_google_access_token()
-    if access_token == None:
-        return
-
+    headers=prepare_google_tasks_headers()
     response = None
-    headers = {"Authorization": "Bearer " +
-               access_token, "Content-Type": "application/json"}
+    
 
     tasks = get_all_tasks()
     for task in tasks:
@@ -880,12 +968,8 @@ def clear_completed_google_tasks():
     Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list
     '''
     # authorize
-    access_token = get_google_access_token()
-    if access_token == None:
-        return
+    headers=prepare_google_tasks_headers()
 
-    headers = {"Authorization": "Bearer " +
-               access_token, "Content-Type": "application/json"}
     response = None
     url = ''
     # clear
@@ -893,20 +977,83 @@ def clear_completed_google_tasks():
     response = requests.post(url,
                              None, headers=headers)
 
-    if response.status_code == 204:
+    if response.status_code != 204:
         print("unfortunetely completed tasks could not be removed from the task list ( due to error: " +
               str(response.status_code))
         return None
 
+def add_non_existing_google_tasks():
+    '''
+    if task was created in g tasks but does not yet exist in our db
+    create
+    '''
+    ct=0
+    all_google_tasks=get_all_google_tasks()
+    for gtask in all_google_tasks["items"]:
+        # check if task exists in db 
+        task_instance=get_task_by_g_id(gtask["id"])
+        if task_instance == None:
+            is_parent=False 
+            try:
+                parent_id=gtask["parent"]
+            except:
+                # no parent, means this is a parent,not subtask 
+                is_parent=True 
+            # I want only parents here, no subtasks (adding subtasks for each parent later) so skip if not a parent 
+            if not is_parent:
+                continue
+            gtask_date=None 
+            try:
+                gtask_date=datetime.strptime(gtask["due"].split("T")[0],'%Y-%m-%d')
+            except:
+                gtask_date=datetime.now()
+            date_obj=gtask_date
+            # if not existing, add:
+            notes=""
+            try:
+                notes=gtask["notes"]
+            except:
+                # no notes ,just copy the title
+                notes=gtask["title"]
+            task_id=create_or_update_task(gtask["title"],notes,date_obj,["gtask_import"],True,False,None,gtask["id"])
+            ct+=1
+            print("created task id:"+str(task_id))
+            # look for subtasks 
+            for subtask_candidate in all_google_tasks["items"]:
+                try:
+                    if subtask_candidate["parent"]==gtask["id"]:
+                        # create
+                        create_subtask(subtask_candidate["title"],"0",task_id,True,subtask_candidate["id"])
+                        print("created subtask of "+str(task_id))
+                except:
+                    continue # subtask_candidate without parent - this is no subtask.
 
-def move_google_task(parent_task_id, task_id):
-    # authorize
+    print("all non existing tasks from gtasks imported ("+str(ct)+")")
+
+
+
+def prepare_google_tasks_headers():
     access_token = get_google_access_token()
     if access_token == None:
-        return
-
+        return None
     headers = {"Authorization": "Bearer " +
                access_token, "Content-Type": "application/json"}
+    return headers
+
+
+def get_all_google_tasks():
+    url = 'https://www.googleapis.com/tasks/v1/lists/' + GOOGLE_TASK_LIST_ID + '/tasks' 
+    headers=prepare_google_tasks_headers()
+    response_data = json.loads(
+        requests.get(url, None, headers=headers).text)
+    return response_data
+
+
+def move_google_task(parent_task_id, task_id):
+    if task_id==None:
+        return
+    # authorize
+    headers=prepare_google_tasks_headers()
     response = None
     url = ''
     # move
@@ -931,8 +1078,7 @@ def createupdate_google_task(title, description, dueDate, task_id=None, complete
     (creates or updates task)
     :return:
     '''
-    dueDate = dueDate + \
-        "T22:00:00.000Z"  # we don't care about time, task are always until end of day...
+    dueDate = dueDate + "T22:00:00.000Z"  # we don't care about time, task are always until end of day...
     payload = {}
 
     if complete:
@@ -947,12 +1093,7 @@ def createupdate_google_task(title, description, dueDate, task_id=None, complete
         }
 
     # authorize
-    access_token = get_google_access_token()
-    if access_token == None:
-        return
-
-    headers = {"Authorization": "Bearer " +
-               access_token, "Content-Type": "application/json"}
+    headers=prepare_google_tasks_headers()
     response = None
     url = ''
     if task_id == None:
@@ -968,25 +1109,24 @@ def createupdate_google_task(title, description, dueDate, task_id=None, complete
         response = requests.patch(url,
                                   data=json.dumps(payload), headers=headers)
 
-    response_data = json.loads(response.text)
+    try:
+        response_data = json.loads(response.text)
 
-    if check_if_google_response_has_errors(response_data):
-        print("unfortunetely task was not created/updated (" +
-              title + " due to error: " + response.text)
+        if check_if_google_response_has_errors(response_data):
+            print("unfortunetely task was not created/updated (" +
+                  title + " due to error: " + response.text)
+            return None
+
+        print("google task created/updated: " + str(response_data["id"]))
+
+        return str(response_data["id"])  # return google task id
+    except:
+        # if something went wrong, return none
         return None
-
-    print("google task created/updated: " + str(response_data["id"]))
-
-    return str(response_data["id"])  # return google task id
 
 
 def delete_google_task(g_task_id):
-    access_token = get_google_access_token()
-    if access_token == None:
-        return
-
-    headers = {"Authorization": "Bearer " +
-               access_token, "Content-Type": "application/json"}
+    headers=prepare_google_tasks_headers()
     response = None
     url = 'https://www.googleapis.com/tasks/v1/lists/' + \
         GOOGLE_TASK_LIST_ID + '/tasks/' + g_task_id

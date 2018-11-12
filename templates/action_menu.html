@@ -1,0 +1,23 @@
+{% extends "layout.html" %} {% block content %}
+
+<br />
+<button onclick="onActionMenuCompleteClicked();" class="action-menu-b1">Complete</button>
+<button onclick="onActionMenuMoveToBacklogClicked();" class="action-menu-b2">->backlog</button>
+<button onclick="onActionMenuMoveToTomorrowClicked();" class="action-menu-b3">->tomorrow</button>
+<button onclick="onActionMenuAddSubtaskClicked('{{url_for('add_subtask',parent_id=task_id)}}');" class="action-menu-b4">Add subtask</button>
+<button onclick="onActionMenuEditClicked('{{ url_for('edit_todo',task_id=task_id) }}');" class="action-menu-b5">Edit</button>
+<button onclick="onActionMenuDeleteClicked();" class="action-menu-b6">Delete</button>
+
+<script>
+    $(document).ready(function () {
+        if ((window.location.href.indexOf('show_action_menu') !== -1)) {
+            initActionMenu({{task_id}});
+
+        }
+    });
+
+
+</script>
+
+
+{% endblock %}

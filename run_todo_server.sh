@@ -1,4 +1,4 @@
 #!/bin/sh
 sleep 10
 
-python /home/pi/Documents/TODO/rasp_todo/views.py
+python /home/pi/Documents/TODO/raspb_todo/views.py

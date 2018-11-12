@@ -6,7 +6,7 @@
     <div id="task_{{item.id}}_history" class="task-title-item-class">
         <button class="task-title-text-class" data-toggle="collapse" data-target="#task_{{item.id}}_history_content">{{ item.title }}</button>
         <p class="task-subtitle-text-class">{{ item.due_date }}</p>
-        <div class="task-settings-class"> <button class="btn btn-default dropdown-toggle action-dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> [A] <span class="caret"></span> </button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> <li><a href="javascript:deleteTask({{item.id}})">Delete</a></li></ul> </div>
+        <div class="task-settings-class"> <button onclick="openHistoryActionMenu({{item.id}})" class="btn btn-default" type="button" id="openActionMenu_{{item.id}}"> ... </button> </div>
     </div>
 
 
